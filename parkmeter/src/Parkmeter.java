@@ -24,7 +24,7 @@ public class Parkmeter extends JFrame {
     private String metodaPlatnosci = "Nie zapłacono";
 
     public Parkmeter() {
-        setTitle("💰 Symulator Parkometru");
+        setTitle("Symulator Parkometru");
         setSize(650, 700);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -39,9 +39,6 @@ public class Parkmeter extends JFrame {
         panel.setBackground(new Color(60, 60, 60));
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // =====================================================
-        // ✅ GÓRNA CZĘŚĆ – REJESTRACJA + GODZINY + INFO O KWOTACH
-        // =====================================================
         JPanel gorny = new JPanel(new GridLayout(3, 2, 10, 10));
         gorny.setOpaque(false);
 
@@ -70,10 +67,6 @@ public class Parkmeter extends JFrame {
 
         panel.add(gorny, BorderLayout.NORTH);
 
-
-        // =====================================================
-        // ✅ DUŻY PRZYCISK „ZATWIERDŹ”
-        // =====================================================
         JPanel srodek = new JPanel();
         srodek.setOpaque(false);
 
@@ -84,6 +77,7 @@ public class Parkmeter extends JFrame {
         srodek.add(zatwierdzBtn);
 
         panel.add(srodek, BorderLayout.CENTER);
+
 
         JPanel przyciski = new JPanel(new FlowLayout());
         przyciski.setOpaque(false);
@@ -121,7 +115,7 @@ public class Parkmeter extends JFrame {
         biletArea.setBackground(new Color(230, 230, 230));
 
         JScrollPane scroll = new JScrollPane(biletArea);
-        scroll.setPreferredSize(new Dimension(550, 400));
+        scroll.setPreferredSize(new Dimension(550, 300));
 
         JPanel dolny = new JPanel(new BorderLayout());
         dolny.setOpaque(false);
@@ -156,7 +150,7 @@ public class Parkmeter extends JFrame {
         zaplacKartaBtn.setEnabled(false);
 
         suma += kwota;
-        metodaPlatnosci = "Monety";
+        metodaPlatnosci = "Gotówka";
 
         sumaLabel.setText(String.format("Wrzucono: %.2f zł", suma));
 
@@ -208,6 +202,7 @@ public class Parkmeter extends JFrame {
         moneta2Btn.setEnabled(true);
         moneta5Btn.setEnabled(true);
         zaplacKartaBtn.setEnabled(true);
+        zatwierdzBtn.setEnabled(false);
 
         JOptionPane.showMessageDialog(this, "Dane zatwierdzone.\nMożesz dokonać płatności.");
     }
@@ -223,16 +218,14 @@ public class Parkmeter extends JFrame {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         biletArea.setText(
-                "=== BILET PARKINGOWY ===\n" +
-                "Rejestracja: " + rejestracjaField.getText().trim() + "\n" +
-                "Start: " + teraz.format(fmt) + "\n" +
-                "Koniec: " + koniec.format(fmt) + "\n" +
-                String.format("Należność: %.2f zł\n", naleznosc) +
-                String.format("Wpłacono: %.2f zł\n", suma) +
-                String.format("Reszta: %.2f zł\n", reszta) +
-                "Metoda płatności: " + metodaPlatnosci + "\n" +
-                "========================\n" +
-                "Dziękujemy i szerokiej drogi!"
+                "--- BILET PARKINGOWY --- \n" +
+                        "Numer rejestracyjny: " + rejestracjaField.getText().trim() + "\n" +
+                        "Start: " + teraz.format(fmt) + "\n" +
+                        "Koniec: " + koniec.format(fmt) + "\n" +
+                        String.format("Opłata: %.2f zł\n", naleznosc) +
+                        String.format("Wpłacono: %.2f zł\n", suma) +
+                        String.format("Reszta: %.2f zł\n", reszta) +
+                        "Metoda płatności: " + metodaPlatnosci + "\n"
         );
     }
 
@@ -257,6 +250,7 @@ public class Parkmeter extends JFrame {
         moneta5Btn.setEnabled(false);
         zaplacKartaBtn.setEnabled(false);
         drukujBtn.setEnabled(false);
+        zatwierdzBtn.setEnabled(true);
     }
 
     public static void main(String[] args) {
